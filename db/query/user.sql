@@ -22,3 +22,7 @@ SET
 WHERE
   username = sqlc.arg(username)
 RETURNING *;
+
+-- name: DeleteUser :exec
+DELETE FROM users
+WHERE username = $1;
