@@ -8,11 +8,11 @@ postgres:
 
 createdb:
 	@echo "Creating database..."
-	@docker exec -it postgres createdb --username=postgres --owner=root project9
+	@docker exec -it postgres createdb --username=postgres --owner=root project8
 
 dropdb:
 	@echo "Dropping database..."
-	@docker exec -it postgres dropdb project9
+	@docker exec -it postgres dropdb project8
 
 sqlc:
 	@echo "Generating sqlc..."

@@ -5,10 +5,13 @@ import (
 )
 
 type Config struct {
-	Environment       string `mapstructure:"ENVIRONMENT"`
-	MigrationURL      string `mapstructure:"MIGRATION_URL"`
-	HttpServerAddress string `mapstructure:"HTTP_SERVER_ADDRESS"`
-	DBSource          string `mapstructure:"DB_SOURCE"`
+	Environment            string `mapstructure:"ENVIRONMENT"`
+	MigrationURL           string `mapstructure:"MIGRATION_URL"`
+	HttpServerAddress      string `mapstructure:"HTTP_SERVER_ADDRESS"`
+	DBSource               string `mapstructure:"DB_SOURCE"`
+	CookieSecret           string `mapstructure:"COOKIE_SECRET"`
+	FirebaseServiceAccount string `mapstructure:"FIREBASE_SERVICE_ACCOUNT"`
+	AuthRootDomain         string `mapstructure:"AUTH_ROOT_DOMAIN"`
 }
 
 func LoadConfig(path string) (config Config, err error) {

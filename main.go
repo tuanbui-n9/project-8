@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"log"
-	"project9/api"
-	db "project9/db/sqlc"
-	"project9/utils"
+	"project8/api"
+	"project8/cookies"
+	db "project8/db/sqlc"
+	"project8/firebaseadmin"
+	"project8/utils"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -24,12 +26,26 @@ func main() {
 	}
 
 	store := db.NewStore(conn)
+	cookies, err := cookies.NewSecureCookie(config.CookieSecret)
+	if err != nil {
+		log.Fatalf("cannot create secure cookie")
+	}
 
-	runGinServer(config, store)
+	firebaseAdmin, err := firebaseadmin.NewFirebaseAdmin(config.FirebaseServiceAccount)
+	if err != nil {
+		log.Fatalf("cannot create firebase admin %v", err)
+	}
+
+	runGinServer(config, store, cookies, firebaseAdmin)
 }
 
-func runGinServer(config utils.Config, store db.Store) {
-	server, err := api.NewServer(config, store)
+func runGinServer(
+	config utils.Config,
+	store db.Store,
+	cookies cookies.Cookies,
+	firebaseAdmin *firebaseadmin.FirebaseAdmin,
+) {
+	server, err := api.NewServer(config, store, cookies, firebaseAdmin)
 
 	if err != nil {
 		log.Fatalf("cannot create server: %v", err)
